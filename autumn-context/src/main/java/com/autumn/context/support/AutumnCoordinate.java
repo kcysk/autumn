@@ -50,4 +50,12 @@ public class AutumnCoordinate implements Coordinate {
     public int hashCode() {
         return Objects.hash(scenario, businessIdentity);
     }
+
+    @Override
+    public String toString() {
+        return "AutumnCoordinate{" +
+                "scenario=" + scenario.getCode() +
+                ", businessIdentity=" + businessIdentity.getIdentity() +
+                '}';
+    }
 }

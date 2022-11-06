@@ -6,21 +6,18 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author momo
  * @since 2022/10/1 08:43
  */
-public class ExtensionRepository implements InitializingBean {
+public class ExtensionRepository {
 
-    private Map<ExtensionKey<? extends Plugin>, Plugin> extensions;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.extensions = new HashMap<>();
-    }
+    private final Map<ExtensionKey<? extends Plugin>, Plugin> extensions = new ConcurrentHashMap<>();
 
     /**
      * get extension by coordinate and actual plugin type
@@ -47,9 +44,19 @@ public class ExtensionRepository implements InitializingBean {
      * @param plugin extension can't null
      * @param <P> generic type of plugin
      */
-    public <P extends Plugin> void addExtension(Coordinate coordinate,Class<P> pluginClass, P plugin) {
+    public <P extends Plugin> void addExtension(Coordinate coordinate, P plugin) {
         Assert.notNull(coordinate, "coordinate can't null");
         Assert.notNull(plugin, "pluginClass can't null");
-        extensions.put(new ExtensionKey<>(coordinate, pluginClass), plugin);
+        addExtension(coordinate, plugin.getClass(), plugin);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void addExtension(Coordinate coordinate, Class<? extends Plugin> actualPluginClass, Plugin plugin) {
+        extensions.put(new ExtensionKey<>(coordinate, actualPluginClass), plugin);
+        for (Class<?> directInterface : actualPluginClass.getInterfaces()) {
+            if (Plugin.class.isAssignableFrom(directInterface) && !Plugin.class.equals(directInterface)) {
+                addExtension(coordinate, (Class<? extends Plugin>) directInterface, plugin);
+            }
+        }
     }
 }

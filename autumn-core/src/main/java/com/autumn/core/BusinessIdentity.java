@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * @author momo
  * @since 2022/9/19 22:14
  */
+@FunctionalInterface
 public interface BusinessIdentity {
 
     /**

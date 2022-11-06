@@ -11,9 +11,9 @@ import java.util.Objects;
  */
 public final class ExtensionKey<P extends Plugin> {
 
-    protected final Coordinate coordinate;
+    private final Coordinate coordinate;
 
-    protected final Class<P> pluginClass;
+    private final Class<P> pluginClass;
 
     public ExtensionKey(Coordinate coordinate, Class<P> pluginClass) {
         this.coordinate = coordinate;

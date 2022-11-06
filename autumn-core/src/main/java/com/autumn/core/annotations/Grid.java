@@ -12,6 +12,7 @@ public @interface Grid {
      */
     String scenario();
 
+
     /**
      * business identity
      */

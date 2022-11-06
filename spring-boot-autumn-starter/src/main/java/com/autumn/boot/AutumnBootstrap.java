@@ -1,10 +1,8 @@
 package com.autumn.boot;
 
+import com.autumn.boot.extension.PluginRegister;
 import com.autumn.context.support.repository.ExtensionRepository;
-import com.sun.source.util.Plugin;
-import org.springframework.context.ApplicationContext;
-
-import java.util.Map;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author momo
@@ -12,14 +10,13 @@ import java.util.Map;
  */
 public class AutumnBootstrap {
 
-    private ApplicationContext applicationContext;
+    @Bean
+    public ExtensionRepository extensionRepository() {
+        return new ExtensionRepository();
+    }
 
-    private ExtensionRepository extensionRepository;
-
-    public void init() {
-        // TODO get all plugin bean and convert to map (coordinate, pluginClass) => plugin instance
-        for (Map.Entry<String, Plugin> ent : applicationContext.getBeansOfType(Plugin.class).entrySet()) {
-
-        }
+    @Bean
+    public PluginRegister pluginRegister(ExtensionRepository extensionRepository) {
+        return new PluginRegister(extensionRepository);
     }
 }
