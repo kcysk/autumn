@@ -1,7 +1,7 @@
 package com.autumn.boot;
 
 import com.autumn.boot.extension.PluginRegister;
-import com.autumn.context.support.repository.ExtensionRepository;
+import com.autumn.context.repository.PluginRepositories;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Bean;
 public class AutumnBootstrap {
 
     @Bean
-    public ExtensionRepository extensionRepository() {
-        return new ExtensionRepository();
+    public PluginRepositories extensionRepository() {
+        return new PluginRepositories();
     }
 
     @Bean
-    public PluginRegister pluginRegister(ExtensionRepository extensionRepository) {
-        return new PluginRegister(extensionRepository);
+    public PluginRegister pluginRegister(PluginRepositories pluginRepositories) {
+        return new PluginRegister(pluginRepositories);
     }
 }

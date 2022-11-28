@@ -1,4 +1,6 @@
-package com.autumn.context.support.exception;
+package com.autumn.context.repository;
+
+import com.autumn.core.AutumnException;
 
 /**
  * @author momo

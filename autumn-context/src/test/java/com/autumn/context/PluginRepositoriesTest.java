@@ -1,13 +1,10 @@
 package com.autumn.context;
 
 import com.autumn.context.support.AutumnCoordinate;
-import com.autumn.context.support.repository.CommonBusinessIdentity;
-import com.autumn.context.support.repository.CommonScenario;
 import com.autumn.context.support.repository.DirectPluginImpl;
-import com.autumn.context.support.repository.ExtensionRepository;
+import com.autumn.context.repository.PluginRepositories;
 import com.autumn.context.support.repository.MulitiPlugin;
 import com.autumn.context.support.repository.SecondImplementPluginImpl;
-import com.autumn.context.support.repository.ValidateAccountStatusPlugin;
 import com.autumn.context.support.repository.ValidatePasswordPlugin;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,13 +19,13 @@ import static com.autumn.context.support.repository.CommonScenario.ONE;
  * @author shenke
  * @since 2022/11/5 13:28
  */
-public class ExtensionRepositoryTest {
+public class PluginRepositoriesTest {
 
-    private ExtensionRepository extensionRepository;
+    private PluginRepositories pluginRepositories;
 
     @Before
     public void init() throws Exception {
-        this.extensionRepository = new ExtensionRepository();
+        this.pluginRepositories = new PluginRepositories();
     }
 
 
@@ -38,18 +35,18 @@ public class ExtensionRepositoryTest {
         AutumnCoordinate second = new AutumnCoordinate(ONE, SECOND);
         DirectPluginImpl directPlugin = new DirectPluginImpl();
         SecondImplementPluginImpl secondImplementPlugin = new SecondImplementPluginImpl();
-        extensionRepository.addExtension(direct, directPlugin);
-        extensionRepository.addExtension(second, secondImplementPlugin);
+        pluginRepositories.addPlugin(direct, directPlugin);
+        pluginRepositories.addPlugin(second, secondImplementPlugin);
 
         ValidatePasswordPlugin validatePasswordPlugin
-                = extensionRepository.getExtension(direct, ValidatePasswordPlugin.class);
+                = pluginRepositories.getPlugin(direct, ValidatePasswordPlugin.class);
         Assert.assertEquals(directPlugin, validatePasswordPlugin);
 
         AutumnCoordinate thrid = new AutumnCoordinate(ONE, MULITI);
         MulitiPlugin mulitiPlugin = new MulitiPlugin();
-        extensionRepository.addExtension(thrid, mulitiPlugin);
+        pluginRepositories.addPlugin(thrid, mulitiPlugin);
         ValidatePasswordPlugin thirdValidatePassword
-                = extensionRepository.getExtension(thrid, ValidatePasswordPlugin.class);
+                = pluginRepositories.getPlugin(thrid, ValidatePasswordPlugin.class);
         Assert.assertEquals(thirdValidatePassword, mulitiPlugin);
 
 

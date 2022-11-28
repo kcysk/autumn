@@ -1,13 +1,10 @@
-package com.autumn.context.support.exception;
+package com.autumn.core;
 
 /**
  * @author momo
- * @since 2022/10/4 09:35
+ * @since 2022.11.28
  */
 public class AutumnException extends RuntimeException {
-
-    public AutumnException() {
-    }
 
     public AutumnException(String message) {
         super(message);
@@ -21,7 +18,7 @@ public class AutumnException extends RuntimeException {
         super(cause);
     }
 
-    public AutumnException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected AutumnException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
